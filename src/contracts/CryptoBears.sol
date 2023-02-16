@@ -2,10 +2,8 @@
 pragma solidity ^0.8.0;
 pragma abicoder v2;
 
-// import ERC721 iterface
 import "./ERC721.sol";
 
-// CryptoBears smart contract inherits ERC721 interface
 contract CryptoBears is ERC721 {
 
   // this contract's token collection name

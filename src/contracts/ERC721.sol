@@ -9,9 +9,14 @@ import "./Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
+import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 contract ERC721 is ERC165, IERC721, IERC721Metadata, Context {
+    using SafeMath for uint;
+    using Address for address;
     using Strings for uint;
+    bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
     string private _name;
     string private _symbol;
     mapping(address => uint) _balances;
