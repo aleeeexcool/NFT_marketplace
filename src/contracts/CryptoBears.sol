@@ -13,7 +13,7 @@ contract CryptoBears is ERC721Enumerable {
     // total number of crypto bears minted
     uint256 public cryptoBearCounter;
 
-    // define crypto boy struct
+    // define crypto bear struct
     struct CryptoBear {
         uint256 tokenId;
         string tokenName;
@@ -127,7 +127,7 @@ contract CryptoBears is ERC721Enumerable {
         require(tokenOwner != address(0));
         // the one who wants to buy the token should not be the token's owner
         require(tokenOwner != msg.sender);
-        // get that token from all crypto bears mapping and create a memory of it defined as (struct => CryptoBoy)
+        // get that token from all crypto bears mapping and create a memory of it defined as (struct => CryptoBear)
         CryptoBear memory cryptobear = allCryptoBears[_tokenId];
         // price sent in to buy should be equal to or more than the token's price
         require(msg.value >= cryptobear.price);
