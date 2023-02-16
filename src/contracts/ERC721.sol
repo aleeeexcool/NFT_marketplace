@@ -3,14 +3,13 @@ pragma solidity ^0.8.0;
 
 import "./IERC721Metadata.sol";
 import "./IERC721Receiver.sol";
+import "./ERC721Enumerable.sol";
 import "./ERC165.sol";
 import "./IERC721.sol";
 import "./Strings.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 import "@openzeppelin/contracts/utils/Address.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableSet.sol";
-import "@openzeppelin/contracts/utils/structs/EnumerableMap.sol";
 
 contract ERC721 is ERC165, IERC721, IERC721Metadata, Context {
     using SafeMath for uint;
@@ -19,9 +18,11 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata, Context {
     bytes4 private constant _ERC721_RECEIVED = 0x150b7a02;
     string private _name;
     string private _symbol;
+    string private _baseURI;
     mapping(address => uint) _balances;
     mapping(uint => address) _owners;
     mapping(uint => address) _tokenApprovals;
+    mapping (uint => string) private _tokenURIs;
     mapping(address => mapping(address => bool)) _operatorApprovals;
 
     modifier _requireMinted(uint tokenId) {
@@ -58,15 +59,34 @@ contract ERC721 is ERC165, IERC721, IERC721Metadata, Context {
         _transfer(from, to, tokenId);
     }
 
-    function _baseURI() internal pure virtual returns(string memory) {
-        return "";
+    function _setBaseURI(string memory baseURI_) internal virtual {
+        _baseURI = baseURI_;
     }
 
-    function tokenURI(uint tokenId) public view virtual _requireMinted(tokenId) returns(string memory) {
-        string memory baseURI = _baseURI();
-        return bytes(baseURI).length > 0 ?
-            string(abi.encodePacked(baseURI, tokenId.toString())) :
-            "";
+    function baseURI() public view virtual returns (string memory) {
+        return _baseURI;
+    }
+
+    function _setTokenURI(uint tokenId, string memory _tokenURI) internal virtual {
+        require(_exists(tokenId), "ERC721Metadata: URI set of nonexistent token");
+        _tokenURIs[tokenId] = _tokenURI;
+    } 
+
+    function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
+        require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
+
+        string memory _tokenURI = _tokenURIs[tokenId];
+        string memory base = baseURI();
+
+        if (bytes(base).length == 0) {
+            return _tokenURI;
+        }
+        
+        if (bytes(_tokenURI).length > 0) {
+            return string(abi.encodePacked(base, _tokenURI));
+        }
+
+        return string(abi.encodePacked(base, tokenId.toString()));
     }
 
     function approve(address to, uint tokenId) public {
