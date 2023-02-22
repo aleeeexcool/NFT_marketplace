@@ -11,8 +11,8 @@ NFT marketplace DApp where users mint ERC721 implemented Crypto Bears NFTs.
 
 ## Stack
 - [Solidity](https://docs.soliditylang.org/en/v0.8.19/) - Object-oriented, high-level language for implementing smart contracts.
-- Bootstrap 4 - CSS framework for faster and easier web development.
-- React.js - JavaScript library for building user interfaces.
-- ethers.js - Allows users to interact with a local or remote ethereum node using HTTP, IPC or WebSocket.
-- Hardhat - Development environment, testing framework and asset pipeline for blockchains using the Ethereum Virtual Machine (EVM).
-
+- [Bootstrap 4](https://getbootstrap.com) - CSS framework for faster and easier web development.
+- [React.js](https://reactjs.org) - JavaScript library for building user interfaces.
+- [ethers.js](https://docs.ethers.org/v5/) - Ethers.js aims to be a complete and compact library for interacting with the Ethereum Blockchain and its ecosystem.
+- [Hardhat](https://hardhat.org) - Hardhat is using for editing, compiling, debugging and deploying your smart contracts and dApps, all of which work together to create a complete development environment.
+- [Chai](https://www.chaijs.com) - Chai is a BDD / TDD assertion library for node and the browser that can be delightfully paired with any javascript testing framework.
